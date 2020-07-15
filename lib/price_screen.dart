@@ -91,7 +91,6 @@ class _PriceScreenState extends State<PriceScreen> {
                 );
               },
               itemCount: coinData.getCryptoList().length,
-//              children: getCryptoCards(),
             ),
           ),
           Container(
@@ -110,7 +109,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 SizedBox(width: 5),
                 Container(
                   width: 60,
-                  child: !Platform.isIOS ? getCupertinoPicker() : getDropdownMenu(),
+                  child: Platform.isIOS ? getCupertinoPicker() : getDropdownMenu(),
                 ),
                 SizedBox(width: 10),
                 FlatButton(
