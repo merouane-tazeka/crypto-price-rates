@@ -33,7 +33,7 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
-  String _apiKey = 'API_Key_From_coinAPI.io';
+  String _apiKey = 'API_KEY_FROM:_COINAPI.IO';
 
   List<DropdownMenuItem<String>> getCurrencyDowndownList() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
@@ -61,7 +61,7 @@ class CoinData {
   }
 
   Future<dynamic> getExchangeRate(String currency) async {
-    Map<String, String> cryptoPrices = {};
+    Map<String, dynamic> cryptoPrices = {};
     for (String crypto in cryptoList) {
       String url = 'https://rest.coinapi.io/v1/exchangerate/$crypto/$currency/?apikey=$_apiKey';
 
@@ -71,7 +71,6 @@ class CoinData {
         String stringData = response.body;
         var data = jsonDecode(stringData);
 
-        jsonDecode(data);
         double price = data['rate'];
         cryptoPrices[crypto] = price.toStringAsFixed(2);
       } else {

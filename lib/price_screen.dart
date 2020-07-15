@@ -14,7 +14,7 @@ class _PriceScreenState extends State<PriceScreen> {
   CoinData coinData = CoinData();
 
   String selectedCurrency = 'AUD';
-  Map<String, String> cryptoPrices;
+  Map<String, dynamic> cryptoPrices;
 
   bool isWaiting = false;
 
@@ -36,9 +36,7 @@ class _PriceScreenState extends State<PriceScreen> {
     return CupertinoPicker(
       backgroundColor: Colors.amberAccent,
       onSelectedItemChanged: (selectedIndex) {
-        setState(() {
-          selectedCurrency = coinData.getCurrencyList()[selectedIndex];
-        });
+        selectedCurrency = coinData.getCurrencyList()[selectedIndex];
       },
       itemExtent: 40,
       children: coinData.getCurrencyTextWidgets(),
@@ -53,9 +51,7 @@ class _PriceScreenState extends State<PriceScreen> {
       style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w500),
       items: coinData.getCurrencyDowndownList(),
       onChanged: (String newValue) {
-        setState(() {
-          selectedCurrency = newValue;
-        });
+        selectedCurrency = newValue;
       },
     );
   }
