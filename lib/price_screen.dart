@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/widgets/crypto_card.dart';
+import 'package:flutter/services.dart';
 import 'dart:io' show Platform;
 import 'coin_data.dart';
 

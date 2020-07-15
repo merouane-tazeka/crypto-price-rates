@@ -33,7 +33,7 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
-  String _apiKey = '304B6245-FFBA-46F7-A26D-D7FB43E9B23D';
+  String _apiKey = 'API_Key_From_coinAPI.io';
 
   List<DropdownMenuItem<String>> getCurrencyDowndownList() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
@@ -76,7 +76,7 @@ class CoinData {
         cryptoPrices[crypto] = price.toStringAsFixed(2);
       } else {
         print('response status code: ${response.statusCode}');
-        throw ('Erreur with the get request');
+        throw ('Error with the get request');
       }
     }
 
