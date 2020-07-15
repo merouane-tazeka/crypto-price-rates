@@ -31,13 +31,25 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
-  List<DropdownMenuItem<String>> getCurrencyList() {
+  List<DropdownMenuItem<String>> getCurrencyDowndownList() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(value),
       );
     }).toList();
+  }
+
+  List<Text> getCurrencyTextWidgets() {
+    List<Text> list = [];
+    for (var currency in currenciesList) {
+      list.add(Text(currency));
+    }
+    return list;
+  }
+
+  List<String> getCurrencyList() {
+    return currenciesList;
   }
 
   List<String> getCryptoList() {
