@@ -12,23 +12,23 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   CoinData coinData = CoinData();
 
-  String selectedCurrency = 'CAD';
+  String selectedCurrency = 'AUD';
+  Map<String, String> cryptoPrices;
 
-  List<Widget> getCryptoCards() {
-    List<Widget> cryptoCards = [];
-    for (var crypto in coinData.getCryptoList()) {
-      cryptoCards.add(
-        Padding(
-          padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-          child: CryptoCard(
-            selectedCurrency: selectedCurrency,
-            cryptoCurrency: crypto,
-            value: 1.54,
-          ),
-        ),
-      );
+  bool isWaiting = false;
+
+  void fetchData() async {
+    isWaiting = true;
+
+    try {
+      var data = await coinData.getExchangeRate(selectedCurrency);
+      isWaiting = false;
+      setState(() {
+        cryptoPrices = data;
+      });
+    } catch (e) {
+      print(e);
     }
-    return cryptoCards;
   }
 
   Widget getCupertinoPicker() {
@@ -48,6 +48,7 @@ class _PriceScreenState extends State<PriceScreen> {
     return DropdownButton<String>(
       value: selectedCurrency,
       dropdownColor: Colors.amberAccent,
+      iconEnabledColor: Color(0xFF844685),
       style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w500),
       items: coinData.getCurrencyDowndownList(),
       onChanged: (String newValue) {
@@ -56,6 +57,12 @@ class _PriceScreenState extends State<PriceScreen> {
         });
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
   }
 
   @override
@@ -72,18 +79,21 @@ class _PriceScreenState extends State<PriceScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            child: ListView(
-              children: getCryptoCards(),
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+                  child: CryptoCard(
+                    selectedCurrency: selectedCurrency,
+                    cryptoCurrency: coinData.getCryptoList()[index],
+                    exchangeRate: isWaiting ? '?' : cryptoPrices[coinData.getCryptoList()[index]],
+                  ),
+                );
+              },
+              itemCount: coinData.getCryptoList().length,
+//              children: getCryptoCards(),
             ),
           ),
-//          Padding(
-//            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-//            child: CryptoCard(
-//              selectedCurrency: selectedCurrency,
-//              cryptoCurrency: 'BTC',
-//              value: 1.54,
-//            ),
-//          ),
           Container(
             height: 150.0,
             alignment: Alignment.center,
@@ -97,11 +107,26 @@ class _PriceScreenState extends State<PriceScreen> {
                   'Choose currency: ',
                   style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(width: 15),
+                SizedBox(width: 5),
                 Container(
                   width: 60,
-                  child: Platform.isIOS ? getCupertinoPicker() : getDropdownMenu(),
+                  child: !Platform.isIOS ? getCupertinoPicker() : getDropdownMenu(),
                 ),
+                SizedBox(width: 10),
+                FlatButton(
+                  onPressed: fetchData,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF844685),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Text(
+                      'Get Rates',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

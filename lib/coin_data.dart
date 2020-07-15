@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 const List<String> currenciesList = [
   'AUD',
@@ -31,6 +33,8 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
+  String _apiKey = '304B6245-FFBA-46F7-A26D-D7FB43E9B23D';
+
   List<DropdownMenuItem<String>> getCurrencyDowndownList() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
@@ -54,5 +58,28 @@ class CoinData {
 
   List<String> getCryptoList() {
     return cryptoList;
+  }
+
+  Future<dynamic> getExchangeRate(String currency) async {
+    Map<String, String> cryptoPrices = {};
+    for (String crypto in cryptoList) {
+      String url = 'https://rest.coinapi.io/v1/exchangerate/$crypto/$currency/?apikey=$_apiKey';
+
+      http.Response response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        String stringData = response.body;
+        var data = jsonDecode(stringData);
+
+        jsonDecode(data);
+        double price = data['rate'];
+        cryptoPrices[crypto] = price.toStringAsFixed(2);
+      } else {
+        print('response status code: ${response.statusCode}');
+        throw ('Erreur with the get request');
+      }
+    }
+
+    return cryptoPrices;
   }
 }

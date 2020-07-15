@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class CryptoCard extends StatelessWidget {
   final String selectedCurrency;
   final String cryptoCurrency;
-  final double value;
+  final String exchangeRate;
 
-  CryptoCard({this.cryptoCurrency, this.selectedCurrency, this.value});
+  CryptoCard({this.cryptoCurrency, this.selectedCurrency, this.exchangeRate});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CryptoCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
         child: Text(
           //TODO: Make Dynamic
-          '1 $cryptoCurrency = $value $selectedCurrency',
+          '1 $cryptoCurrency = $exchangeRate $selectedCurrency',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20.0,
