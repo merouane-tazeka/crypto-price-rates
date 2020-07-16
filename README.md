@@ -5,6 +5,7 @@ A simple app that gives the exchange rate of Bitcoin, Ethereum and Litecoin in t
 ## Screenshot
 
 ![iOS_App_Running](./screenshot/crypto_ios.gif)
+![Android_App_Running](./screenshot/crypto_android.gif)
 
 ## About
 
