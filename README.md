@@ -1,4 +1,4 @@
-# CryptoTracker
+# CryptoPrices
 
 A simple app that gives the exchange rate of Bitcoin, Ethereum and Litecoin in the desired currency. The app is made with [Flutter Framework](https://flutter.dev/).
 
